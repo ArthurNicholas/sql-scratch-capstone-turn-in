@@ -1,0 +1,49 @@
+--Question 1
+ Select * 
+ From Survey
+ Limit 10;
+ --Question 2
+ Select question, 
+ count(Distinct user_id)
+ From Survey 
+ Group By question;
+ --Question 4
+ Select *
+ From home_try_on 
+ Limit 5;
+ Select * 
+ From purchase 
+ Limit 5;
+ Select *
+ From quiz
+ limit 5;
+ --Question 5
+SELECT DISTINCT q.user_id,
+   h.user_id IS NOT NULL AS 'is_home_try_on',
+   h.number_of_pairs,
+   p.user_id IS NOT NULL AS 'is_purchase'
+FROM quiz q
+LEFT JOIN home_try_on h
+   ON q.user_id = h.user_id
+LEFT JOIN purchase p
+   ON p.user_id = q.user_id
+LIMIT 10;
+--Question 6
+--the purchase difference between 3 or 5 try on
+SELECT h.number_of_pairs,
+count(Distinct h.user_id) AS 'number_of_purchase'
+From home_try_on h
+LEFT JOIN purchase p
+	ON p.user_id = h.user_id
+GROUP BY h.number_of_pairs
+LIMIT 10;
+-- the most popular model purchased
+ Select model_name, 
+ count(Distinct user_id) as 'number_of_purchase'
+ From purchase 
+ Group By model_name;
+ -- how many product for each model
+  Select model_name, 
+ count(Distinct product_id)
+ From purchase 
+ Group By model_name;
